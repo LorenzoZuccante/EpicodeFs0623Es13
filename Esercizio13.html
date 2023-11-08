@@ -3,9 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Una to-do list in cui puoi aggiungere sbarrare o rimuovere le tue task">
     <title>Esercizio13</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <h1>Crea la tua TO-DO list</h1>
+    <input type="text" name="taskbar" id="taskbar" placeholder="Inserisci la tua task">
+    <button id="addbutton">+</button>
+    <button id="clearbutton">Clear all</button>
+    <div id="todo"></div>
+
+
+
+<script>
+class TODOList{
+    constructor(){
+        this.tasks = []
+        console.log("tasks", this.tasks)
+    }
+
+    aggiungiTask(task){
+        this.tasks.push(task)
+        console.log("tasks", this.tasks)
+
+        const todo = document.getElementById("todo")
+        const p = document.createElement("p")
+        p.appendChild(document.createTextNode(task))
+        todo.appendChild(p)
+        p.addEventListener("click", (e)=>{
+            this.sbarraTask(task);
+            e.srcElement.remove();
+        })
+
+    }
+    sbarraTask(task){
+       console.log(task + " "+"completato!");
+       console.log(this.tasks); 
+       const index = this.tasks.indexOf(task);
+       this.tasks.splice(index, 1)
+       console.log(this.tasks)
+    }
+
+}
+
+    document.addEventListener("DOMContentLoaded", () =>{
+    const newAddButton = document.getElementById("addbutton")
+    const clearButton = document.getElementById("clearbutton")
+    const input = document.getElementById("taskbar")
+
+        const todoList = new TODOList()
+
+    newAddButton.addEventListener("click", () =>{
+        todoList.aggiungiTask(input.value)
+    })
+    clearButton.addEventListener("click", () =>{
+        console.log("clear")
+    })
+    input.addEventListener("keypress", (e)=>{
+        if(e.key === "Enter"){
+            todoList.aggiungiTask(input.value);
+            input.value = "";
+        
+        }
+    })
+})
+
+</script>
 </body>
 </html>
